@@ -2,7 +2,7 @@
 
 ## Purpose
 The goal is to find all real valued solutions to the form of any equation of the form 
-<p align="center"><div <img src="https://render.githubusercontent.com/render/math?math=f(x) = A_1 e^{B_1x} + A_2 e^{B_2x} + \ldots + A_N e^{B_Nx} = 0"></p>
+<p align="center"><img src="https://render.githubusercontent.com/render/math?math=f(x) = A_1 e^{B_1x} + A_2 e^{B_2x} + \ldots + A_N e^{B_Nx} = 0"></p>
 where all <img src="https://render.githubusercontent.com/render/math?math=A \in \mathbb{R}"/> and all <img src="https://render.githubusercontent.com/render/math?math=B \in \mathbb{R}"/>. (Next step would be to extend it to handle complex numbers or complex conjugates.) Note that is one of the B terms is 0, then the term is constant.
 
 These equations frequently arise in physics from solutions of systems of differential equations. In my case I needed to solve the to simulate a heat exchanger.
@@ -12,13 +12,15 @@ These equations frequently arise in physics from solutions of systems of differe
 As far as I know, the method used has not been described elsewhere, so I will christen it *"Eng's method"* after yours truly. 
 
 The basic method is as follows:
-1. Sort the terms by ascending value of exponent: $B_1 < B_2 < \ldots < B_N$
+1. Sort the terms by ascending value of exponent: <img src="https://render.githubusercontent.com/render/math?math=B_1 < B_2 < \ldots < B_N"/>
 2. Find a range where there could possibly be a root. To do so, consider that as x increases, the Nth term will begin growing faster than all other terms, so find a value of x where $$ |A_N e^{B_Nx}| > |\sum_{i=1}^{N-1}A_ie^{B_ix}|  $$
     Actually we will do the following. Count the number of terms with an opposite sign as $A_n$. Call this number $P$. For all $P$ terms $A_n$, calculate 
-    $$|A_N e^{B_Nx_i}| = P\cdot|A_i e^{B_ix_i}|$$
-    $$x_i = \frac{\ln(P\cdot|A_i/A_N|)}{B_N - B_i} $$
-    $$x_{max} = max(x_i)$$
-    So basically at $x_{max}$ we have guaranteed that the fastest growing term is growing $P$ times faster than any other term with opposite sign. So there will definitely not be a root for $x > x_{max}$.
+    <p align="center">
+    <img src="https://render.githubusercontent.com/render/math?math=|A_N e^{B_Nx_i}| = P\cdot|A_i e^{B_ix_i}|"/><br/><br/>
+    <img src="https://render.githubusercontent.com/render/math?math=x_i = \frac{\ln(P\cdot|A_i/A_N|)}{B_N - B_i}"/><br/><br/>
+    <img src="https://render.githubusercontent.com/render/math?math=x_{max} = max(x_i)"/><br/>
+    </p>
+    So basically at $x_{max}$ we have guaranteed that the fastest growing term is growing $P$ times faster than any other term with opposite sign. So there will definitely not be a root for <img src="https://render.githubusercontent.com/render/math?math=x > x_{max}"/>.
 3. Using the same sort of reasoning, looking at the slowest growing term $A_1e^{b_1x}$ and find an x where this term is $Q$ times more than all other terms with opposite sign. The minimum such term is $x_{min}$. Since the slowest growing term is also the slowest to shrink as we move towards $x = -\infty $, we can confidentially say that for $x < x_{min}$ the sign of the first term will dominate and we will never cross $f(x) = 0$.
 4. Take repeated derivatives (k of them) of $f(x)$. 
    $$\frac{d^{k}}{d x^k}f(x) = B_1^{k}A_1e^{B_1x} + B_2^{k}A_2e^{b_2x} + \ldots + B_N^{k}A_Ne^{B_Nx}$$
