@@ -1,7 +1,9 @@
 # solve-exponentials
 
 ## Purpose
-The goal is to find all real valued solutions to the form of any equation of the form $$f(x) = A_1 e^{B_1x} + A_2 e^{B_2x} + \ldots + A_N e^{B_Nx} = 0$$ where all $A \in \mathbb{R}$ and all $B \in \mathbb{R}$. (Next step would be to extend it to handle complex numbers or complex conjugates.) Note that is one of the B terms is 0, then the term is constant.
+The goal is to find all real valued solutions to the form of any equation of the form 
+<img src="https://render.githubusercontent.com/render/math?math=f(x) = A_1 e^{B_1x} + A_2 e^{B_2x} + \ldots + A_N e^{B_Nx} = 0">
+$$f(x) = A_1 e^{B_1x} + A_2 e^{B_2x} + \ldots + A_N e^{B_Nx} = 0$$ where all $A \in \mathbb{R}$ and all $B \in \mathbb{R}$. (Next step would be to extend it to handle complex numbers or complex conjugates.) Note that is one of the B terms is 0, then the term is constant.
 
 These equations frequently arise in physics from solutions of systems of differential equations. In my case I needed to solve the to simulate a heat exchanger.
 
