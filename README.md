@@ -13,15 +13,15 @@ As far as I know, the method used has not been described elsewhere, so I will ch
 
 The basic method is as follows:
 1. Sort the terms by ascending value of exponent: <img src="https://render.githubusercontent.com/render/math?math=B_1 < B_2 < \ldots < B_N"/>
-2. Find a range where there could possibly be a root. To do so, consider that as x increases, the Nth term will begin growing faster than all other terms, so find a value of x where $$ |A_N e^{B_Nx}| > |\sum_{i=1}^{N-1}A_ie^{B_ix}|  $$
-    Actually we will do the following. Count the number of terms with an opposite sign as $A_n$. Call this number $P$. For all $P$ terms $A_n$, calculate 
+2. Find a range where there could possibly be a root. To do so, consider that as x increases, the Nth term will begin growing faster than all other terms, so find a value of x where <img src="https://render.githubusercontent.com/render/math?math=|A_N e^{B_Nx}| > |\sum_{i=1}^{N-1}A_ie^{B_ix}|"/>
+    Actually we will do the following. Count the number of terms with an opposite sign as <img src="https://render.githubusercontent.com/render/math?math=A_n"/>. Call this number *P*. For all *P* terms calculate 
     <p align="center">
     <img src="https://render.githubusercontent.com/render/math?math=|A_N e^{B_Nx_i}| = P\cdot|A_i e^{B_ix_i}|"/><br/><br/>
     <img src="https://render.githubusercontent.com/render/math?math=x_i = \frac{\ln(P\cdot|A_i/A_N|)}{B_N - B_i}"/><br/><br/>
     <img src="https://render.githubusercontent.com/render/math?math=x_{max} = max(x_i)"/><br/>
     </p>
     So basically at <img src="https://render.githubusercontent.com/render/math?math=x_{max}"/> we have guaranteed that the fastest growing term is growing P times faster than any other term with opposite sign. So there will definitely not be a root for <img src="https://render.githubusercontent.com/render/math?math=x > x_{max}"/>.
-3. Using the same sort of reasoning, looking at the slowest growing term $A_1e^{b_1x}$ and find an x where this term is Q times more than all other terms with opposite sign. The minimum such term is <img src="https://render.githubusercontent.com/render/math?math=x_{min}"/>. Since the slowest growing term is also the slowest to shrink as we move towards <img src="https://render.githubusercontent.com/render/math?math=x = -\infty"/>, we can confidentially say that for <img src="https://render.githubusercontent.com/render/math?math=x < x_{min}"/> the sign of the first term will dominate and we will never cross <img src="https://render.githubusercontent.com/render/math?math=f(x) = 0"/>.
+3. Using the same sort of reasoning, looking at the slowest growing term <img src="https://render.githubusercontent.com/render/math?math=A_1e^{b_1x}"/> and find an x where this term is Q times more than all other terms with opposite sign. The minimum such term is <img src="https://render.githubusercontent.com/render/math?math=x_{min}"/>. Since the slowest growing term is also the slowest to shrink as we move towards <img src="https://render.githubusercontent.com/render/math?math=x = -\infty"/>, we can confidentially say that for <img src="https://render.githubusercontent.com/render/math?math=x < x_{min}"/> the sign of the first term will dominate and we will never cross <img src="https://render.githubusercontent.com/render/math?math=f(x) = 0"/>.
 4. Take repeated derivatives (k of them) of <img src="https://render.githubusercontent.com/render/math?math=f(x)"/>. 
 <p align="center">
    <img src="https://render.githubusercontent.com/render/math?math=\frac{d^{k}}{d x^k}f(x) = B_1^{k}A_1e^{B_1x} + B_2^{k}A_2e^{b_2x} + \ldots + B_N^{k}A_Ne^{B_Nx}"/>
@@ -52,7 +52,7 @@ TLDR;
 ## API
 
 Sum of exponent functions are defined as arrays of terms:
-````[{A: 1, B: 1}]```` would correspond to $1\cdot e^{1\cdot x}$ and ````[{A: 1, B: 1},{A: -2, B: 0}]```` corresponds to $1\cdot e^{1\cdot x} - 2$
+````[{A: 1, B: 1}]```` would correspond to <img src="https://render.githubusercontent.com/render/math?math=1\cdot e^{1\cdot x}"/> and ````[{A: 1, B: 1},{A: -2, B: 0}]```` corresponds to <img src="https://render.githubusercontent.com/render/math?math=1\cdot e^{1\cdot x} - 2"/>
 
 Two functions are provided, ````evaluateExponentFormula```` and ````findRootOfExponents````
 
