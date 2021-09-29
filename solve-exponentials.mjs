@@ -1,16 +1,47 @@
+import brentSolver from './brent-solver.mjs';
+
 const evaluateExponentFormula = (formula, x) => {
     return (formula.reduce( (total, partFormula) => total + partFormula.A * Math.exp(x*partFormula.B), 0));
+}
+
+const findRoot = (xMin, xMax, curve) => {
+    let tolerance = 1e-12;
+    let method = ' brent';
+    if (method === 'brent') {
+        let yMin = evaluateExponentFormula(curve, xMin);
+        let yMax = evaluateExponentFormula(curve, xMax);
+        if (yMin * yMax >= 0) {return(null);} //same sign, no roots.
+        let solver = brentSolver.setup(xMin,yMin,xMax,yMax);
+        //brentSolver.setTolerance(solver, tolerance);
+        for (let i=0; i<30; i++) {
+            let xGuess = brentSolver.getX(solver);
+            let yGuess = evaluateExponentFormula(curve, xGuess);
+            if (Math.abs(yGuess) < tolerance) {
+                //console.log('brent converged in ' + i + ' iterations.');
+                return(xGuess);
+            }
+            brentSolver.setY(solver, yGuess);
+        }
+        console.log('No covergence.');
+    }
+    else {
+        return(bisection(xMin, xMax, tolerance, curve));
+    }
 }
 
 //only call this if we are sure there is a single root in the range.
 const bisection = (xMin, xMax, tolerance, curve) => {
     let yMin = evaluateExponentFormula(curve, xMin);
     let yMax = evaluateExponentFormula(curve, xMax);
-    if (yMin * yMax >= 0) {return(null);} //same sine, no roots.
+    if (yMin * yMax >= 0) {return(null);} //same sign, no roots.
     let x=0;
     for (let i=0; i<30; i++) {
         x = (xMin + xMax)/2;
         let y = evaluateExponentFormula(curve, x);
+        if (Math.abs(y) < tolerance) {
+            //console.log('bisection converged in ' + i + ' iterations.');
+            return(x);
+        }
         if (yMin * y >= 0) {
             xMin = x; //can't be between xMin and x since they have same sine
         } else {
@@ -156,7 +187,7 @@ function findRootOfExponents(xMin, xMax, curve) {
             } 
             else {
                 //find the root
-                let xIntersection = bisection(xMin, xMax, 1e-12, derivativeCurve);
+                let xIntersection = findRoot(xMin, xMax, derivativeCurve);
                 //there was a root so now the previous monotomic range is divided into two on either side of the root.
                 //console.log(`Root of ${currentDerivative} derivative at x=${xIntersection}`);
                 newMonotomicRanges.push({xMin: xMin, xMax: xIntersection});

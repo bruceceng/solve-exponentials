@@ -1,5 +1,10 @@
 import exponentSolver from './solve-exponentials.mjs';
+
+import {performance} from 'perf_hooks';
+
 function testSolveExponentials() {
+
+	let startTime = performance.now();
 
 	let curve = [
 
@@ -88,6 +93,9 @@ function testSolveExponentials() {
 	];
 	exponentSolver.findRootOfExponents(0, 100, curve);
     console.log('Expected: No roots');
+
+	let endTime = performance.now();
+	console.log('Took: ', endTime - startTime);
 
 	return;
 }
